@@ -38,16 +38,43 @@ struct PersonRow: View, Identifiable {
     }
 }
 
+struct PersonsListView: View {
+    var body: some View {
+        List(persons) { person in
+            NavigationLink(destination: PersonDetail(person: person)) {
+                PersonRow(person: person)
+            }
+        }.navigationBarTitle(Text("Persons"))
+    }
+}
+
+struct BackupNavigationView: View {
+    var body: some View {
+        HStack(spacing: 0) {
+            NavigationView {
+                PersonsListView()
+            }.navigationViewStyle(StackNavigationViewStyle())
+            Divider()
+            Spacer()
+            Spacer()
+        }
+    }
+}
+
 struct ContentView: View {
     var body: some View {
-        NavigationView {
-            List(persons) { person in
-                NavigationLink(destination: PersonDetail(person: person)) {
-                    PersonRow(person: person)
+        GeometryReader { geometry in
+            NavigationView {
+                PersonsListView()
+                if geometry.size.width < geometry.size.height {
+                    // Portrait
+                    BackupNavigationView()
+                } else {
+                    // Landscape
+                    Spacer()
                 }
-            }
-//        }.navigationViewStyle(DoubleColumnNavigationViewStyle())
-        }.navigationViewStyle(StackNavigationViewStyle())
+            }.navigationViewStyle(DoubleColumnNavigationViewStyle())
+        }
     }
 }
 
