@@ -46,7 +46,8 @@ struct ContentView: View {
                     PersonRow(person: person)
                 }
             }
-        }
+//        }.navigationViewStyle(DoubleColumnNavigationViewStyle())
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
